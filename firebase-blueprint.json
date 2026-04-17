@@ -1,0 +1,76 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User role and profile data",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "worker"] },
+        "email": { "type": "string" }
+      },
+      "required": ["name", "role"]
+    },
+    "Counter": {
+      "title": "Counter",
+      "description": "Sequential ID counter",
+      "type": "object",
+      "properties": {
+        "lastId": { "type": "number" }
+      },
+      "required": ["lastId"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A dispatch order",
+      "type": "object",
+      "properties": {
+        "orderNo": { "type": "number" },
+        "displayId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "bossId": { "type": "string" },
+        "workerA": { "type": "string" },
+        "workerAId": { "type": "string" },
+        "workerB": { "type": "string" },
+        "workerBId": { "type": "string" },
+        "assignedWorkerIds": { "type": "array", "items": { "type": "string" } },
+        "amount": { "type": "number" },
+        "details": { "type": "string" },
+        "screenshots": { "type": "number" },
+        "status": { "type": "string", "enum": ["未完成", "已完成"] },
+        "uid": { "type": "string" }
+      },
+      "required": ["orderNo", "displayId", "createdAt", "bossId", "amount", "status", "uid"]
+    },
+    "Employee": {
+      "title": "Employee",
+      "description": "An employee profile",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "status": { "type": "string" },
+        "isAvailable": { "type": "boolean" },
+        "uid": { "type": "string" }
+      },
+      "required": ["name", "status", "isAvailable", "uid"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and roles"
+    },
+    "/counters/{counterId}": {
+      "schema": { "$ref": "#/entities/Counter" },
+      "description": "Counters for sequential IDs"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Collection of dispatch orders"
+    },
+    "/employees/{employeeId}": {
+      "schema": { "$ref": "#/entities/Employee" },
+      "description": "Collection of employees"
+    }
+  }
+}
